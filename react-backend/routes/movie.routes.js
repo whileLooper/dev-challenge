@@ -5,5 +5,5 @@ module.exports = (app) => {
   app.get('/movies', movies.findAll);
 
   // Get a one movie with title
-  app.get('/movies/:title', movies.findOne);
+  app.get('/movies/:id', movies.findOne);
 }

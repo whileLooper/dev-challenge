@@ -7,7 +7,6 @@ exports.findAll = (req, res) => {
     .then(movies => {
       // map movies title name as new array
       res.json(movies);
-      
     })
     .catch(err => {
       res.status(500).send({
@@ -18,4 +17,14 @@ exports.findAll = (req, res) => {
 
 // Find a one movie with a title
 exports.findOne = (req, res) => {
+  console.log(req.params.id);
+  Movie.findById(req.params.id)
+    .then(detail => {
+      res.json(detail);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving movies.'
+      });
+    });
 };

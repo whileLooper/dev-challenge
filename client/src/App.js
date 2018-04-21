@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-  state = { titles: [], type: '', list: [] };
+  state = { titles: [], type: '', list: [], detail: undefined };
   list = this.titles;
 
   componentDidMount() {
@@ -30,40 +30,58 @@ class App extends Component {
     }
   }
 
+  // click to get movie detail by post id to backend
+  getDetail(id) {
+    fetch('/movies/' + id)
+      .then(res => res.json())
+      .then(detail => this.setState({ detail }));
+  }
+
   render() {
     return (
       <div className="App">
         <header className="">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <div className="col-5">
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <span className="input-group-text" id="basic-addon1" role="img"  aria-label="searchIcon">
-                🔍
-              </span>
+
+        <div className="row">
+          {/* search and name list section */}
+          <div className="col-lg-4 col-sm-12">
+            <div className="col-12">
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="basic-addon1" role="img"  aria-label="searchIcon">
+                    🔍
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="enter a movie name"
+                  aria-label="Username"
+                  aria-describedby="basic-addon1"
+                  onChange={this.filerting.bind(this)}
+                />
+              </div>
             </div>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="enter a movie name"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-              onChange={this.filerting.bind(this)}
-            />
+            <div className="col-12">
+              <div className="list-group-flush">
+                {this.state.list.map(title => (
+                  <button 
+                    type="button" 
+                    className="list-group-item list-group-item-action"
+                    key={title['_id']}
+                    onClick={() => this.getDetail(title['_id'])}>
+                    {title['TitleName']}
+                  </button>
+                ))}
+              </div>
+            </div>       
           </div>
-        </div>
-        <div className="col-5">
-          <div className="list-group-flush">
-            {this.state.list.map(title => (
-              <button 
-                type="button" 
-                className="list-group-item list-group-item-action"
-                key={title['_id']}
-                onClick={this.getDetail(title['_id'])}>
-                {title['TitleName']}
-              </button>
-            ))}
+
+          {/* Movie detail info section */}
+          <div className="col-lg-8 col-sm-12">
+            <h2 className="text-center">{this.state.detail ? this.state.detail['TitleName'] : ''}</h2>
           </div>
         </div>
       </div>
