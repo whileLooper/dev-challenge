@@ -39,7 +39,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App col-12">
         <header className="">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
@@ -82,6 +82,31 @@ class App extends Component {
           {/* Movie detail info section */}
           <div className="col-lg-8 col-sm-12">
             <h2 className="text-center">{this.state.detail ? this.state.detail['TitleName'] : ''}</h2>
+            {/* Genres section */}
+            {
+              this.state.detail ?
+              this.state.detail.Genres.map(genre => (
+                <span className="badge badge-dark m-2">{ genre }</span>
+              ))
+              : ''
+            }
+            <div className="row">
+            {/* Awards section */}
+            {
+              this.state.detail ? 
+              this.state.detail.Awards.map(award => (
+                  <div className="col-lg-3 p-0 card border-info mb-3 mr-2" style={ {'maxWidth': '220px'} }>
+                    <div className="card-header">{ award.AwardCompany } { award.AwardWon ? <span className="badge badge-danger">Won</span> : ''}</div>
+                    <div className="card-body text-danger">
+                      <h5 className="card-title font-weight-bold">{ award.Award }</h5>
+                    </div>
+                    <p className="card-text">{ award.hasOwnProperty('Participants') ? award.Participants.toString() : '' }</p>
+                    <small className="card-text text-muted text-right">- { award.AwardYear }</small>
+                  </div>
+              ))
+              : ''
+            }
+            </div>
           </div>
         </div>
       </div>
