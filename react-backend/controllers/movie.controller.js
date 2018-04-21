@@ -1,6 +1,11 @@
 const Movie = require('../models/movie.model');
 
-// Retrieve and return all movies from the database.
+/**
+ * Find all movie from the table
+ * response json format of all movies
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.findAll = (req, res) => {
   Movie.find({}, 'TitleName')
     .lean()
@@ -15,9 +20,13 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a one movie with a title
+/**
+ * find one movie detail by input id
+ * response json format of movie detail
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.findOne = (req, res) => {
-  console.log(req.params.id);
   Movie.findById(req.params.id)
     .then(detail => {
       res.json(detail);

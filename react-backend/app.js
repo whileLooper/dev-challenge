@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -37,7 +36,6 @@ app.use(bodyParser.json());
 
 // routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 require('./routes/movie.routes.js')(app);
 
 // catch 404 and forward to error handler
