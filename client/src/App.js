@@ -3,10 +3,15 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  // predefind state variables
   state = { titles: [], type: '', list: [], detail: undefined };
+
+  // assign default value to title list
   list = this.titles;
 
+  
   componentDidMount() {
+    // fetch movie titles data from backend
     fetch('/movies')
       .then(res => res.json())
       .then(titles => this.setState({ titles: titles, list: titles }));
@@ -19,6 +24,7 @@ class App extends Component {
     this.setState({ typed: event.target.value });
     let value = event.target.value;
 
+    // filerting list base on user input string
     if (!value.length) {
       this.setState({ list: this.state.titles });
     } else {
